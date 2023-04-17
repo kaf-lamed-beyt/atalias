@@ -1,13 +1,20 @@
 {
-  "name": "at-alias",
-  "version": "1.0.0",
+  "name": "atalias",
+  "version": "0.0.1.alpha",
   "description": "at (@) custom aliases for your Next.js projects, without the forward slashes",
   "main": "index.js",
+  "bin": {
+    "create-atalias": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nextjs",
+    "aliases",
+    "cli"
+  ],
+  "author": "Caleb Olojo",
   "license": "MIT",
   "dependencies": {
     "chalk": "^5.2.0",
@@ -15,5 +22,14 @@
     "fs": "^0.0.1-security",
     "glob": "^10.1.0",
     "linebyline": "^1.3.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "bugs": {
+    "url": "https://github.com/kaf-lamed-beyt/atalias/issues"
+  },
+  "homepage": "https://github.com/kaf-lamed-beyt/atalias#readme"
 }
