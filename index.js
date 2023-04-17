@@ -51,6 +51,8 @@ async function run() {
     .filter((dir) => fs.lstatSync(dir).isDirectory())
     .map((dir) => dir.replace(`${mainDir}/`, ""));
 
+  console.log(dirs);
+
   try {
     rl.question(
       info(
@@ -89,15 +91,15 @@ async function run() {
               const path = [`${dir}/*`];
               config.compilerOptions.paths[alias] = path;
 
-              fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
-              console.log(success("Aliases created successfully! 🚀"));
+              if (config.compilerOptions.paths.hasOwnProperty(alias)) {
+                console.log(error(`${alias} exists as an alias already.`));
+
+                rl.close();
+              }
             });
           } else {
-            console.log(
-              warning(
-                `The directory you want to use as an alias is not present in ${mainDir}. \nconsider checking again, will ya?  😉`
-              )
-            );
+            fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
+            console.log(success("Aliases created successfully! 🚀"));
           }
           rl.close();
         }
