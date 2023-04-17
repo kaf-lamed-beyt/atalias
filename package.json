@@ -1,0 +1,18 @@
+{
+  "name": "at-alias",
+  "version": "1.0.0",
+  "description": "at (@) custom aliases for your Next.js projects, without the forward slashes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^10.0.1",
+    "fs": "^0.0.1-security",
+    "glob": "^10.1.0",
+    "linebyline": "^1.3.0"
+  }
+}
