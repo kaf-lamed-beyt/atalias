@@ -28,23 +28,13 @@ I wasn't satisfied. No. I did not like it. I think my issues are just too much. 
 
 ## Usage
 
-Install the package with npm
+Install the package with npm, yarn or pnpm, globally
 
 ```bash
-npm install atalias
+npm install -g atalias
 ```
 
-**yarn**
-
-```bash
-yarn add atalias
-```
-
-**pnpm**
-
-```bash
-pnpm add atalias
-```
+If you're on linux, consider adding the `sudo` prefix before "npm"
 
 The tool assumes that you have a `src` folder in your project. To create an alias, you can type the command below into your terminal.
 
