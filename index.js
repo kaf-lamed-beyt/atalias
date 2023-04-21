@@ -20,23 +20,6 @@ async function run() {
     output: process.stdout,
   });
 
-  program.option("-l, --list-atalias", "Lists your available aliases").parse();
-
-  const options = program.opts();
-
-  if (options.l) {
-    console.log(normal("Available aliases: "));
-
-    for (const [alias, path] of Object.entries(
-      configFile.compilerOptions.paths
-    )) {
-      console.log(normal(`${alias} --> ${path.join(", ")}`));
-    }
-
-    rl.close();
-    return;
-  }
-
   const configFile = fs.existsSync("tsconfig.json")
     ? "tsconfig.json"
     : "jsconfig.json";
@@ -46,6 +29,21 @@ async function run() {
       paths: {},
     },
   };
+
+  program.option("-l", "Lists your available aliases").parse();
+
+  const options = program.opts();
+
+  if (options.l) {
+    console.log(normal("Available aliases: "));
+
+    for (const [alias, path] of Object.entries(config.compilerOptions.paths)) {
+      console.log(normal(`${alias} --> ${path.join(", ")}`));
+    }
+
+    rl.close();
+    return;
+  }
 
   if (fs.existsSync(configFile)) {
     const contents = fs.readFileSync(configFile, "utf8");
