@@ -37,6 +37,9 @@ async function run() {
   if (options.l) {
     console.log(normal("Available aliases: "));
 
+    const configData = fs.readFileSync(configFile);
+    const config = JSON.parse(configData);
+
     for (const [alias, path] of Object.entries(config.compilerOptions.paths)) {
       console.log(normal(`${alias} --> ${path.join(", ")}`));
     }

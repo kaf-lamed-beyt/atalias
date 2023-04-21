@@ -50,10 +50,10 @@ create-atalias src/hooks, src/layouts, src/containers, src/utils
 
 ## Options
 
-Say you forgot the aliases you have created, and to avoid conflicting aliases, you can list all the aliases you have in the terminal by adding the `-l` or `--list` flag to **create-atalias** like so:
+Say you forgot the aliases you have created, and to avoid conflicting aliases, you can list all the aliases you have in the terminal by adding the `-l` flag to **create-atalias** like so:
 
 ```bash
-create-atalias --list
+create-atalias --l
 ```
 
 ## Contributing.

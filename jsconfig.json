@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "paths": {
-      "@funcs/*": ["src/funcs/*"],
-      "@components/*": ["src/components/*"]
-    },
-    "baseUrl": "./"
-  }
-}
