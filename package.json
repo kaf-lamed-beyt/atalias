@@ -1,6 +1,6 @@
 {
   "name": "atalias",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "at (@) custom aliases for your Next.js projects, without the forward slashes",
   "main": "index.js",
   "bin": {

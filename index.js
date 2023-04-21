@@ -14,6 +14,8 @@ async function run() {
   const error = chalkStderr.redBright;
   const warning = chalkStderr.yellow;
   const normal = chalkStderr.whiteBright;
+  const blue = chalkStderr.blue;
+  const bold = chalkStderr.bold;
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -35,13 +37,13 @@ async function run() {
   const options = program.opts();
 
   if (options.l) {
-    console.log(normal("Available aliases: "));
+    console.log(normal("Available aliases: \n"));
 
     const configData = fs.readFileSync(configFile);
     const config = JSON.parse(configData);
 
     for (const [alias, path] of Object.entries(config.compilerOptions.paths)) {
-      console.log(normal(`${alias} --> ${path.join(", ")}`));
+      console.log(`${blue(bold(alias))} 👉 ${path.join(", ")}`);
     }
 
     rl.close();
