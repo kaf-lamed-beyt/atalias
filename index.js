@@ -3,6 +3,7 @@ const fs = require("fs");
 const glob = require("glob");
 const { program } = require("commander");
 const readline = require("readline");
+const path = require("path");
 
 async function run() {
   // dynamic import because of esm module resolution
@@ -19,11 +20,11 @@ async function run() {
     output: process.stdout,
   });
 
-  program
-    .option("-l, --list-atalias", "Lists your available aliases")
-    .parse(process.argv);
+  program.option("-l, --list-atalias", "Lists your available aliases").parse();
 
-  if (program.list) {
+  const options = program.opts();
+
+  if (options.l) {
     console.log(normal("Available aliases: "));
 
     for (const [alias, path] of Object.entries(
@@ -61,7 +62,7 @@ async function run() {
   }
 
   const mainDir = "src";
-  const globPattern = `${mainDir}/**/`;
+  const globPattern = `${mainDir}/*`;
 
   const dirs = glob
     .sync(globPattern)
@@ -75,7 +76,7 @@ async function run() {
       ),
       (answer) => {
         const inputDirs = answer.split(",").map((dir) => dir.trim());
-        const allDirs = [...new Set([...dirs, ...inputDirs])];
+        const allDirs = [...new Set([...inputDirs])];
 
         // lets us enforce a pattern of reperesenting the dirs to avoid confusion
         let isValid = true;
@@ -102,42 +103,43 @@ async function run() {
           rl.close();
         } else {
           if (isValid) {
+            // Check if the alias already exists in the paths object
+            let aliasExists = false;
+
             allDirs.forEach((dir) => {
-              const alias = `@${dir.replace(`${mainDir}/`, "")}`;
+              const alias = `@${dir.replace(`${mainDir}/`, "")}/*`;
               const path = [`${dir}/*`];
 
-              // Check if the alias already exists in the paths object
-              let aliasExists = false;
-
-              for (let key in config.compilerOptions.paths) {
-                if (key === alias) {
+              if (!aliasExists) {
+                if (config.compilerOptions.paths.hasOwnProperty(alias)) {
                   aliasExists = true;
                   console.log(error(`\n${alias} already exists as an alias.`));
-                  break;
                 }
               }
 
               if (!aliasExists) {
                 config.compilerOptions.paths[alias] = path;
                 console.log(normal(`${alias}...`));
-
-                fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
-                console.log(
-                  success(
-                    allDirs.length > 1
-                      ? "\nall aliases were created successfully! 🚀"
-                      : "\nalias created successfully 🚀"
-                  )
-                );
-
-                rl.close();
               } else {
                 rl.close();
                 return;
               }
             });
+
+            if (!aliasExists) {
+              fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
+              console.log(
+                success(
+                  allDirs.length > 1
+                    ? "\nall aliases were created successfully! 🚀"
+                    : "\nalias created successfully 🚀"
+                )
+              );
+            }
           }
         }
+
+        rl.close();
       }
     );
   } catch (errorMsg) {
